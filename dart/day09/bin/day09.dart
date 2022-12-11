@@ -26,6 +26,7 @@ void main(List<String> arguments) async {
     int count = int.parse(splits[1]);
 
     print('== $line ==');
+    print('');
 
     for (int i = 0; i < count; ++i) {
       rope[0] += headDirection;
@@ -36,33 +37,34 @@ void main(List<String> arguments) async {
         }
         rope[k + 1] = rope[k + 1] + Vector2(distance.x.sign, distance.y.sign);
       }
-      printGrid(rope);
       visited.add(rope.last);
     }
+    printGrid(rope);
   }
 
   print(visited.length);
 }
 
 void printGrid(List<Vector2> rope) {
-  for (int y = 4; y >= 0; --y) {
-    String row = '';
-    for (int x = 0; x < 6; ++x) {
+  StringBuffer buffer = StringBuffer();
+  for (int y = 10; y >= -10; --y) {
+    for (int x = -15; x < 15; ++x) {
       final Vector2 coordinate = Vector2(x, y);
       int index = rope.indexOf(coordinate);
       if (index == 0) {
-        row += 'H';
+        buffer.write('H');
       } else if (index == rope.length - 1) {
-        row += 'T';
+        buffer.write('T');
       } else if (index > 0 && index < rope.length) {
-        row += index.toString();
+        buffer.write(index);
       } else {
-        row += '.';
+        buffer.write('.');
       }
     }
-    print(row);
+    buffer.writeln();
   }
-  print(' ');
+  buffer.writeln();
+  print(buffer);
 }
 
 class Vector2 {
