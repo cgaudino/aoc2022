@@ -24,18 +24,26 @@ class Directory {
 
   final int _spaceCode = ' '.codeUnitAt(0);
 
-  void printTree([int indentCount = 0]) {
-    String indent =
-        String.fromCharCodes(List<int>.filled(indentCount * 2, _spaceCode));
-    print('$indent- $name (dir)');
+  void printTreeToStringBuffer(StringBuffer buffer, [int indentCount = 0]) {
+    for (int i = 0; i < indentCount * 2; ++i) {
+      buffer.writeCharCode(_spaceCode);
+    }
+    buffer.write(name);
+    buffer.writeln(' (dir)');
     indentCount++;
-    indent =
-        String.fromCharCodes(List<int>.filled(indentCount * 4, _spaceCode));
+
     for (Directory subDir in subDirectories) {
-      subDir.printTree(indentCount);
+      subDir.printTreeToStringBuffer(buffer, indentCount);
     }
     for (File file in files) {
-      print("$indent- ${file.name} (file, size=${file.size})");
+      for (int i = 0; i < indentCount * 2; ++i) {
+        buffer.writeCharCode(_spaceCode);
+      }
+      buffer.write('- ');
+      buffer.write(file.name);
+      buffer.write(' (file, size=');
+      buffer.write(file.size);
+      buffer.writeln(')');
     }
     indentCount--;
   }

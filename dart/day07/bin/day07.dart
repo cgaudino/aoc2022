@@ -11,7 +11,10 @@ void main(List<String> arguments) async {
   final Parser parser = Parser(root);
 
   parser.parse(lines);
-  root.printTree();
+
+  StringBuffer treeBuffer = StringBuffer();
+  root.printTreeToStringBuffer(treeBuffer);
+  print(treeBuffer);
 
   // print(sumAllDirectoriesSmallerThan(root, 100000));
 
