@@ -10,10 +10,8 @@ void main(List<String> arguments) async {
   final file = File('../../data/day08/input.txt');
   List<String> lines = await file.readAsLines();
 
-  List<List<int>> trees = [];
-  for (String line in lines) {
-    trees.add(line.codeUnits);
-  }
+  List<List<int>> trees =
+      List.generate(lines.length, (i) => lines[i].codeUnits, growable: false);
 
   print(calculateNumTreesVisible(trees));
   print(findMaxTreeScore(trees));
